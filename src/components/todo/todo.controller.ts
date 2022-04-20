@@ -28,3 +28,23 @@ export const createTodo = async (req: Request, res: Response) => {
 
 }
 
+
+export const getAllTodos = async (req: Request, res: Response) => {
+    try {
+
+        const results = await TodoInstance.findAll({ where: {}})
+
+        return res.status(500).json({
+            success: true,
+            message: 'Todos retrieved successfully',
+            count: results.length,
+            data: results
+        })
+
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
+}
