@@ -32,7 +32,9 @@ export const createTodo = async (req: Request, res: Response) => {
 export const getAllTodos = async (req: Request, res: Response) => {
     try {
 
-        const results = await TodoInstance.findAll({ where: {}})
+        const limit = req.query?.limit as number | undefined;
+
+        const results = await TodoInstance.findAll({ where: {}, limit })
 
         return res.status(500).json({
             success: true,

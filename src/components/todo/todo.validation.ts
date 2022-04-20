@@ -1,24 +1,37 @@
-import { body } from 'express-validator';
+import { Request, Response, NextFunction } from 'express';
+import { query } from 'express-validator';
+import Joi from '@hapi/joi';
+
+const createTodoValSchema = Joi.object({
+    title: Joi.string().required(),
+    completed: Joi.boolean()
+})
+
+const getTodoValSchema = Joi.object({
+    limit: Joi.number().required().min(1).max(3)
+})
 
 
-class TodoValidator {
-    checkCreateTodo() {
-        return [
-        body('id')
-            .optional()
-            .isUUID(4)
-            .withMessage('The id value should be UUID v4'),
-        body('title')
-            .notEmpty()
-            .withMessage('The title value should not be empty'),
-        body('completed')
-            .optional()
-            .isBoolean()
-            .withMessage('completed should be a boolean')
-            .isIn([0, false])
-            .withMessage('The value should be 0 or false')
-    ]
+
+export const checkCreateTodo = async (req: Request, res: Response, next: NextFunction) => {
+        
+    try {
+        await createTodoValSchema.validateAsync(req.body);
+    } catch (err) {
+        return res.status(422).json(err);
     }
+
+    next();
 }
 
-export default new TodoValidator();
+export const checkGetTodos = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        await getTodoValSchema.validateAsync(req.query);
+
+    } catch (err) {
+        return res.status(422).json(err) 
+    }
+
+    next();
+}
+
