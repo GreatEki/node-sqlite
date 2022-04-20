@@ -33,8 +33,9 @@ export const getAllTodos = async (req: Request, res: Response) => {
     try {
 
         const limit = req.query?.limit as number | undefined;
+        const offset= req.query?.offset as number | undefined;
 
-        const results = await TodoInstance.findAll({ where: {}, limit })
+        const results = await TodoInstance.findAll({ where: {}, limit, offset })
 
         return res.status(500).json({
             success: true,

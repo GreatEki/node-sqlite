@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { query } from 'express-validator';
 import Joi from '@hapi/joi';
 
 const createTodoValSchema = Joi.object({
@@ -8,7 +7,8 @@ const createTodoValSchema = Joi.object({
 })
 
 const getTodoValSchema = Joi.object({
-    limit: Joi.number().required().min(1).max(3)
+    limit: Joi.number().min(1).max(3),
+    offset: Joi.number().min(1).max(3)
 })
 
 
