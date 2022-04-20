@@ -28,7 +28,6 @@ export const createTodo = async (req: Request, res: Response) => {
 
 }
 
-
 export const getAllTodos = async (req: Request, res: Response) => {
     try {
 
@@ -48,6 +47,38 @@ export const getAllTodos = async (req: Request, res: Response) => {
         return res.status(500).json({
             success: false,
             message: err.message
+        })
+    }
+}
+
+export const getTodoById = async (req: Request, res: Response) => {
+
+    const { id } = req.params;
+
+    try {
+        const todo = await TodoInstance.findOne({ where: { id }})
+
+    if (!todo) {
+        return res.status(401).json({
+            success: false,
+            message: "No todo found"
+        })
+    }
+
+    if (todo) {
+        return res.status(200).json({
+            success: false,
+            message: "Todo retrieved successfully",
+            data: todo
+        })
+    }
+
+
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: err.message,
+            error: err
         })
     }
 }
