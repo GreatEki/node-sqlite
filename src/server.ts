@@ -2,6 +2,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import db from './config/database.config';
+import router from './routes';
+
 // Initialize App
 const app = express();
 
@@ -12,6 +14,8 @@ dotenv.config({ path: path.resolve(__dirname, './config/config.env')});
 
 
 db.sync().then(() => console.log('connected to database successfully'))
+
+app.use('/api', router);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
 

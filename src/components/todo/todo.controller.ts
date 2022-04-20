@@ -1,7 +1,30 @@
 import { Request, Response } from 'express';
+import { v4 as uuidv4 } from 'uuid';
+import { TodoInstance } from './todo.model';
 
 
-export const createTodo = async (req: Resquest, res: Response) => {
+export const createTodo = async (req: Request, res: Response) => {
+
+    const { title, completed } = req.body;
+    const id = uuidv4();
+
+    try {
+
+        const result = await TodoInstance.create({ id, title, completed })
+
+        return res.status(201).json({
+            success: true,
+            message: 'Todo created successfully',
+            todo: result
+        })
+
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: err.message,
+            error: err
+        })
+    }
 
 }
 

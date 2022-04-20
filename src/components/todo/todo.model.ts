@@ -7,7 +7,7 @@ export class TodoInstance extends Model<ITodoModel> {}
 TodoInstance.init(
     {
         id: { 
-            type: DataTypes.STRING,
+            type: DataTypes.UUIDV4,
             primaryKey: true,
             allowNull: false
         },
