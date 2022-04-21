@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createTodo, getAllTodos, getTodoById  } from './todo.controller';
+import { createTodo, getAllTodos, getTodoById, updateTodo  } from './todo.controller';
 import { checkCreateTodo, checkGetTodos } from './todo.validation';
 const router = Router();
 
@@ -8,6 +8,7 @@ router.route('/')
     .get(checkGetTodos, getAllTodos);
 
 router.route('/:id')
-    .get(getTodoById);
+    .get(getTodoById)
+    .put(updateTodo)
 
 export default router;

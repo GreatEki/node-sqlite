@@ -81,4 +81,38 @@ export const getTodoById = async (req: Request, res: Response) => {
             error: err
         })
     }
+}  
+
+export const updateTodo = async (req: Request, res: Response) => {
+    try {
+        
+        const { id } = req.params
+
+        const { title } = req.body
+
+        const todo = await TodoInstance.findOne({ where: { id }})
+
+        if (!todo) {
+            return res.status(400).json({
+                success: false,
+                message: 'No todo found for this record'
+            })
+        }
+
+        if (todo) {
+            const updatedRecord = await todo.update({ title, completed: !todo.getDataValue('completed')})
+
+            return res.status(201).json({
+                success: false,
+                message: 'Todo updated',
+                data: updatedRecord
+            })
+        }
+
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: err.message
+        })
+    }
 }
