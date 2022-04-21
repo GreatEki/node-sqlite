@@ -93,7 +93,7 @@ export const updateTodo = async (req: Request, res: Response) => {
         const todo = await TodoInstance.findOne({ where: { id }})
 
         if (!todo) {
-            return res.status(400).json({
+            return res.status(404).json({
                 success: false,
                 message: 'No todo found for this record'
             })
@@ -113,6 +113,37 @@ export const updateTodo = async (req: Request, res: Response) => {
         return res.status(500).json({
             success: false,
             message: err.message
+        })
+    }
+}
+
+export const deleteTodo = async (req: Request, res: Response) => {
+    try {
+
+        const { id} = req.params;
+
+        const todo = await TodoInstance.findOne({ where: { id }})
+
+        if (!todo) {
+            return res.status(404).json({
+                success: false,
+                message: "Todo Not Found"
+            })
+        }
+
+        if (todo) {
+            await todo.destroy();
+
+            return res.status(201).json({
+                success: false,
+                message: 'Todo deleted'
+            })
+        }
+
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: 'Todo deleted'
         })
     }
 }
