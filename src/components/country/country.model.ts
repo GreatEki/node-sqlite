@@ -3,7 +3,7 @@ import db from '../../config/database.config';
 import { CountryAttributes, CountryInput } from './country.interface';
 
 class Country extends Model<CountryAttributes, CountryInput> {
-    public id!: number;
+    public id!: string;
     public name!: string;
 
     // timestamps
@@ -12,14 +12,14 @@ class Country extends Model<CountryAttributes, CountryInput> {
     public readonly deletedAt!: Date;
 
     static associate(models: any) {
-        Country.hasOne(models.State);
+        Country.hasOne(models.State, { foreignKey: 'countryId' });
     }
 }
 
 Country.init(
     {
         id: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.UUIDV4,
             primaryKey: true,
             allowNull: false
         },

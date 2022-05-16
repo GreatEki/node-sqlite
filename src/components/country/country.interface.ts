@@ -2,7 +2,7 @@ import { Optional } from 'sequelize';
 
 // defines all the possible attributes of our model
 export interface CountryAttributes {
-    id: number;
+    id: string;
     name: string;
 }
 

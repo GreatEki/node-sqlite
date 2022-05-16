@@ -3,9 +3,9 @@ import db from '../../config/database.config';
 import { StateAttributes } from './states.interface';
 
 class State extends Model<StateAttributes> {
-    public id!: number;
+    public id!: string;
     public name!: string;
-    public countryId!: number;
+    public countryId!: string;
 
     // timestamps
     public readonly createdAt!: Date;
@@ -16,7 +16,7 @@ class State extends Model<StateAttributes> {
 State.init(
     {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true
         },
@@ -25,7 +25,7 @@ State.init(
             allowNull: false
         },
         countryId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUIDV4,
             allowNull: false
         }
     },

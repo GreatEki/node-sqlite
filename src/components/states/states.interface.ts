@@ -1,8 +1,8 @@
 import { Optional } from 'sequelize';
 export interface StateAttributes {
-    id: number;
+    id: string;
     name: string;
-    countryId: number;
+    countryId: string;
 }
 
 export interface StateInput extends Optional<StateAttributes, 'id'> {}
