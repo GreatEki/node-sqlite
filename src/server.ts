@@ -13,7 +13,9 @@ app.use(express.json());
 // configure global variables
 dotenv.config({ path: path.resolve(__dirname, './config/config.env') });
 
-db.sync().then(() => console.log('connected to database successfully'));
+db.sync({ alter: true })
+    .then(() => console.log('connected to database successfully'))
+    .catch((err) => console.log(err));
 
 app.use('/api', router);
 

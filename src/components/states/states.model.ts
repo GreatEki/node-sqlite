@@ -1,13 +1,22 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '../../config/database.config';
-import { StateModelI } from './states.interface';
+import { StateAttributes } from './states.interface';
 
-class States extends Model<StateModelI> {}
+class State extends Model<StateAttributes> {
+    public id!: number;
+    public name!: string;
+    public countryId!: number;
 
-States.init(
+    // timestamps
+    public readonly createdAt!: Date;
+    public readonly updatedAt!: Date;
+    public readonly deletedAt!: Date;
+}
+
+State.init(
     {
         id: {
-            type: DataTypes.UUIDV4,
+            type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true
         },
@@ -16,15 +25,15 @@ States.init(
             allowNull: false
         },
         countryId: {
-            type: DataTypes.UUIDV4,
+            type: DataTypes.INTEGER,
             allowNull: false
         }
     },
     {
         sequelize: db,
         tableName: 'state',
-        timestamps: false
+        paranoid: true
     }
 );
 
-export default States;
+export default State;
