@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import db from './config/database.config';
 import router from './routes';
+import { NotFoundError } from './errors';
 
 // Initialize App
 const app = express();
@@ -17,8 +18,7 @@ db.sync().then(() => console.log('connected to database successfully'));
 app.use('/api', router);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
-    const error: any = new Error('Not Found');
-    error.statusCode = 404;
+    const error = new NotFoundError('Resource not found');
     next(error);
 });
 
