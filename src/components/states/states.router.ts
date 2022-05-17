@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { createState } from './states.controller';
+import { createState, getState } from './states.controller';
 
 const router = Router();
 
-router.route('/').post(createState);
+router.route('/').post(createState).get(getState);
 
 export default router;

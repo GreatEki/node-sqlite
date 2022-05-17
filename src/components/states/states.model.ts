@@ -11,6 +11,10 @@ class State extends Model<StateAttributes> {
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;
     public readonly deletedAt!: Date;
+
+    static associate(models: any) {
+        State.belongsTo(models.Country, { foreignKey: 'countryId' });
+    }
 }
 
 State.init(

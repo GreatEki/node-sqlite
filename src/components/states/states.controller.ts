@@ -33,3 +33,24 @@ export const createState = async (req: Request, res: Response) => {
         });
     }
 };
+
+export const getState = async (req: Request, res: Response) => {
+    try {
+        const states = await State.findAll({});
+
+        return res.json({
+            statusCode: 200,
+            status: 'request succeeded',
+            success: true,
+            message: 'States retrieved successfully',
+            data: states
+        });
+    } catch (err) {
+        return res.json({
+            statusCode: err.statusCode,
+            status: err.status,
+            success: false,
+            message: err.message
+        });
+    }
+};
